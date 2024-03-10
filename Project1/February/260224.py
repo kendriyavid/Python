@@ -211,13 +211,22 @@ length = len(arr)
 # print(arr)
 
 
-def rotate(k,arr):
-    arr.reverse()
-    lenght = len(arr)
-    print(arr[k],arr[lenght-k-1])
-    for i in range(k,(lenght-k-1)//2):
-        print(arr[lenght-i-1],"i")
-        arr[i],arr[lenght-i-1] = arr[length-i-1],arr[i]
-        print(arr)
-    print(arr)
-rotate(2,arr)
+# def rotate(k,arr):
+#     arr.reverse()
+#     lenght = len(arr)
+#     print(arr[k],arr[lenght-k-1])
+#     for i in range(k,(lenght-k-1)//2):
+#         print(arr[lenght-i-1],"i")
+#         arr[i],arr[lenght-i-1] = arr[length-i-1],arr[i]
+#         print(arr)
+#     print(arr)
+# rotate(2,arr)
+
+## sliding window
+
+
+# arr=[2, 5, -1, 7, -3, -1, -2]
+# k=4
+
+# for i in range()
+

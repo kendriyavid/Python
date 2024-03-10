@@ -33,7 +33,6 @@
 #             continue
 #     arr[i],arr[maximum] = arr[maximum],arr[i]
 
-
 # print(arr)
 
 
@@ -207,3 +206,5 @@ print(arr)
 length = len(arr)
 j=0
 for i in range(length):
+    
+
