@@ -1,4 +1,4 @@
-# '## DFS Undirected Graph
+# DFS Undirected Graph
 
 # class solution:
 #     def __init__(self,adj):
@@ -410,7 +410,6 @@ class solution:
     def __init__(self,adj):
         self.adj = adj
         self.n = len(adj)
-        self.vistedStack=[False]*self.n
     
     def dfs(self,u):
         self.vistedStack[u]=True
@@ -425,12 +424,10 @@ class solution:
     def EventualState(self):
         result=[]
         for u in range(self.n):
+            self.vistedStack=[False]*self.n
             if not self.dfs(u):
                 result.append(u)
         return result
-
-Solution = solution(adj=[[1,2],[2,3],[5],[0],[5],[],[]])
-print(Solution.EventualState())
 
 
 
