@@ -129,4 +129,35 @@
 #                     return False
 #         return True
 
-## Leetcode 
+## Leetcode 834 Sum of Distance in Tree
+# class solution:
+#     def __init__(self,edges,n):
+#         self.adj = edges
+#         self.n = n
+#         self.matrix = [[float('inf')]*self.n for _ in range(self.n)]
+#         ## initializing matrix
+#         for i,j in self.edges:
+#             self.matrix[j][i]=1
+#             self.matrix[i][j]=1
+#         for i in range(self.n):
+#             self.matrix[i][i]=0
+#         self.distance = [0]*self.n
+        
+#     def Floydwarshall(self):
+#         for via in range(self.n):
+#             for v in range(self.n):
+#                 for u in range(self.n):
+#                     if self.matrix[u][v] > self.matrix[u][via] + self.matrix[via][v]:
+#                         self.matrix[u][v] = self.matrix[u][via] + self.matrix[via][v]
+#                     if self.matrix[v][u] > self.matrix[v][via] + self.matrix[via][u]:
+#                         self.matrix[v][u] = self.matrix[v][via] + self.matrix[via][u]
+        
+        
+#         for i in range(self.n):
+#             count=0
+#             for j in range(self.n):
+#                 count+=self.matix[i][j]
+#             self.distance[i] = count
+#         return self.distance
+                
+
