@@ -409,24 +409,59 @@ class solution:
 # print(f"Number of Good Paths: {result}")
 
 
-## 2359 Find the closest node to given 2 nodes
-class solution:
-    def __init__(self,edges,n1,n2):
-        self.n1  =n1
-        self.n2 = n2
-        self.edges = edges
-        self.n = len(edges)
-        self.adj = [[]for i in range(self.n)]
-        ## initializing the adj
-        self.distance1 = [False]*self
+# ## 2359 Find the closest node to given 2 nodes
+# import heapq
+# class solution:
+#     def __init__(self,edges,n1,n2):
+#         self.n1  =n1
+#         self.n2 = n2
+#         self.edges = edges
+#         self.n = len(edges)
+#         self.distance1 = [float('inf')]*self.n
+#         self.distance1[n1] = 0
+#         self.distance2[n2] = 0
+#         self.distance2 = [float('inf')]*self.n
     
-    def bfs(self):
-        self.adj
-                    
+#     def dfs(self,visited,distance,u):
+#         self.visited[u]=True
+#         v = self.edges[u]
+#         if self.visited[v]!=True:
+#             self.distance[v] = 1+u
+#             self.dfs(v)
 
+#     def ClosestNode(self):
+#         visited1 = [False]*self.n
+#         visited2 = [False]*self.n
+#         self.dfs(visited1,self.distance1,n1)
+#         self.dfs(visited2,self.distance2,n2)
+#         result = float('inf')
+#         for i in range(self.n):
+#             result = min(result,max(self.distance1[i],self.distance2[i]))
+#         return result
 
-            
+## 2492 
+# import heapq
 
+# class solution:
+#     def __init__(self,n,roads):
+#         self.n  = n
+#         self.roads = roads
+#         self.adj = [[]for _ in range(self.n)]
+#         self.distance = [float('inf')]*self.n
+#         self.heap = []
+#         heapq.heapify(self.heap)
+#         self.distance[1] = 0
+#         heapq.heappush((float('inf'),1))
+#         for u,v,w in self.roads:
+#             self.adj[u].append((v,w))
+    
+#     def dijkstra(self):
+#         while self.heap:
+#             minimum,u = heapq.heappop(self.heap)
+#             for v,vw in self.adj[u]:
+#                 if self.distance[v]<min(minimum,vw):
+#                     self.distance[v] = min(minimum,vw)
 
-
+#         return self.distance[self.n]
+        
 
