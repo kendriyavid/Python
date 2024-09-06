@@ -159,7 +159,6 @@
 
 
 import heapq
-
 class Solution:
     def __init__(self, n, roads):
         self.n = n

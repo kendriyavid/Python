@@ -290,4 +290,30 @@
 #         return self.dp[index][currsum]
 
 
+# class solution:
+#     def __init__(self,arr):
+#         self.arr = arr
+#         self.n = len(arr)
+#         self.total = sum(arr)
+#     def dfs(self,index):
+#         if index==0:
+#             return 0
+#         ## nottaking
+#         exclude = self.dfs(index-1)
+#         ## taking
+#         include = self.arr[index]+self.dfs(index-1)
+#         return min(abs(2*exclude - self.total),abs(2*include - self.total))
+    
+## Codeforces  Li Hua and Maze
 
+class solution:
+    def __init__(self,matrix,x1,y1,x2,y2):
+        self.matrix = matrix
+        self.x1 = x1
+        self.y1= y1
+        self.x2 = x2
+        self.y1 = y1
+        self.directions = [(0,1),(1,0),(-1,0),(0,-1)]
+    
+    def bfs(self):
+        
