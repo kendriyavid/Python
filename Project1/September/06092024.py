@@ -239,8 +239,10 @@
 #         return self.result
 
 
-class solution:
-    def __init__(self,adj):
-        self.adj =adj
-        self.n = len(adj)
-        self.visited = visited
+# class solution:
+#     def __init__(self,adj):
+#         self.adj =adj
+#         self.n = len(adj)
+#         self.visited = visited
+
+
