@@ -55,7 +55,6 @@
 
 // #include <iostream>
 // using namespace std;
-
 // int main(){
 //     cout<<"enter your age: ";
 //     int age;
@@ -66,9 +65,7 @@
 
 // #include <iostream>
 // using namespace std;
-
 // int main(){
-
 //     int age;
 //     cout<<"enter your age: ";
 //     cin>>age;
@@ -80,5 +77,7 @@
 //             cout<<"you are not teenager\n"
 //             break;
 //     }
-
 // } 
+
+
+
