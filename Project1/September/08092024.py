@@ -304,39 +304,66 @@
 # print(Solution.maximumBombs())
 
 
-class solution:
-    def __init__(self, bombs):
-        self.bombs = bombs
-        self.n = len(bombs)
-        self.adj = [[] for _ in range(self.n)]
+# class solution:
+#     def __init__(self, bombs):
+#         self.bombs = bombs
+#         self.n = len(bombs)
+#         self.adj = [[] for _ in range(self.n)]
         
-        for i in range(self.n):
-            ux, uy, ur = bombs[i]
-            for j in range(self.n):
-                if i != j:
-                    vx, vy, vr = bombs[j]
-                    if ur**2 >= (ux-vx)**2 + (uy-vy)**2:
-                        self.adj[i].append(j)
+#         for i in range(self.n):
+#             ux, uy, ur = bombs[i]
+#             for j in range(self.n):
+#                 if i != j:
+#                     vx, vy, vr = bombs[j]
+#                     if ur**2 >= (ux-vx)**2 + (uy-vy)**2:
+#                         self.adj[i].append(j)
 
-    def bfs(self, start):
-        queue = [start]
-        exploded = [False] * self.n
-        exploded[start] = True
-        explodedCount = 1
+#     def bfs(self, start):
+#         queue = [start]
+#         exploded = [False] * self.n
+#         exploded[start] = True
+#         explodedCount = 1
 
-        while queue:
-            i = queue.pop(0)
-            for j in self.adj[i]:
-                if not exploded[j]:
-                    exploded[j] = True
-                    explodedCount += 1
-                    queue.append(j)
+#         while queue:
+#             i = queue.pop(0)
+#             for j in self.adj[i]:
+#                 if not exploded[j]:
+#                     exploded[j] = True
+#                     explodedCount += 1
+#                     queue.append(j)
 
-        return explodedCount
+#         return explodedCount
 
-    def maximumBombs(self):
-        return max(self.bfs(i) for i in range(self.n))
+#     def maximumBombs(self):
+#         return max(self.bfs(i) for i in range(self.n))
 
-bombs = [[2,1,3],[6,1,4]]
-Solution = solution(bombs)
-print(Solution.maximumBombs())
+# bombs = [[2,1,3],[6,1,4]]
+# Solution = solution(bombs)
+# print(Solution.maximumBombs())
+# import heapq
+# class Solution:
+#     def __init__(self,n,edges,succ):
+#         self.succ = succ
+#         self.edges = edges
+#         self.n = n
+#         self.adj = [[] for _ in range(self.n)]
+#         self.heap = []
+#         heapq.heapify(self.heap)
+#         self.successArray = [0]*self.n
+#         ## adj initialization
+#         for u,v in self.edges:
+#             self.adj[u].append(v)
+#             self.adj[v].append(u)
+    
+#     def Dijkstra(self,source,end):
+#         heapq.heappush(self.heap,(1,u))
+#         while self.heap:
+#             prob,source = heapq.heappop(self.heap)
+#             if source ==end:
+#                 return prob
+#             for v in self.adj[u]:
+#                 if self.successArray[v]<self.succ[v]*prob:
+#                     self.successArray[v] = self.succ*prob
+#                     heapq.heappush(self.heap,(self.successArray[v],v))
+        
+            
