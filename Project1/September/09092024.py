@@ -201,3 +201,155 @@
 #                 queue.append(i)
 #         self.Topological(queue,self.groupResult,self.groupResult)
 
+## sort Items by Groups respecting dependencies
+# class solution:
+#     def __init__(self,n,m,group,beforeItems):
+#         self.n  = n
+#         self.group = group
+#         self.beforeItems = beforeItems
+#         self.gindeg = [0]*self.m
+#         self.bindeg = [0]*self.n
+#         self.gres =[]
+#         self.bres =[]
+#         self.adj =[[] for _ in range(self.n)]
+#         ## asigning groups to loners
+#         for i in range(len(group)):
+#             if group[i]==-1:
+#                 group[i] =m
+#                 m+=1
+#         self.m = m
+#         self.groupAdj = [[] for _ in range(self.m)]
+    
+#         ## badj initialization
+#         for i in range(len(self.beforeItems)):
+#             for nodes in self.beforeItems[i]:
+#                 self.adj[nodes].append(i)
+        
+#         ## groupAdj initialization
+#         for i in range(len(self.beforeItems)):
+#             g1 = self.group[i]
+#             for nodes in range(self.beforeItems[i]):
+#                 g2 = self.group[nodes]
+#                 if g1!=g2:
+#                     self.groupAdj[g2].append(g1)
+
+
+#     def TopologicalSorting(self,queue,indegree,res,adj):
+#         while queue:
+#             u = queue.pop(0)
+#             res.append(u)
+#             for v in adj[u]:
+#                 indegree[v]-=1
+#                 if indegree[v] ==0:
+#                     queue.append(v)
+    
+#     def SortItemsbyGroups(self):
+#         queue=[]
+#         for i in range(self.n):
+#             if self.bindeg[i] == 0:
+#                 queue.append(i)
+#         self.TopologicalSorting(queue,self.bindeg,self.bres,self.adj)
+#         queue=[]
+#         for i in range(self.m):
+#             if self.gindeg[i]==0:
+#                 queue.append(i)
+#         self.TopologicalSorting(queue,self.gindeg,self.gres,self.groupAdj)
+#         result =[]
+#         for i in self.gres:
+#             for j in self.bres:
+#                 if i==self.group[j]:
+#                     result.append(j)
+#         return result
+
+
+# from collections import deque
+
+# class Solution:
+#     def __init__(self, n, m, group, beforeItems):
+#         self.n = n
+#         self.group = group
+#         self.beforeItems = beforeItems
+#         self.bindeg = [0] * self.n  # Indegree for item nodes
+#         self.gindeg = [0] * m  # Indegree for group nodes
+#         self.bres = []  # Result for item ordering
+#         self.gres = []  # Result for group ordering
+#         self.adj = [[] for _ in range(self.n)]  # Adjacency list for items
+
+#         # Assign groups to items without groups (-1)
+#         for i in range(len(group)):
+#             if group[i] == -1:
+#                 group[i] = m
+#                 m += 1
+#         self.m = m
+#         self.groupAdj = [[] for _ in range(self.m)]  # Adjacency list for groups
+
+#         # Initialize item adjacencies and calculate indegrees for items
+#         for i in range(len(self.beforeItems)):
+#             for node in self.beforeItems[i]:
+#                 self.adj[node].append(i)
+#                 self.bindeg[i] += 1
+
+#         # Initialize group adjacencies and calculate indegrees for groups
+#         for i in range(len(self.beforeItems)):
+#             g1 = self.group[i]
+#             for node in self.beforeItems[i]:
+#                 g2 = self.group[node]
+#                 if g1 != g2:
+#                     self.groupAdj[g2].append(g1)
+#                     self.gindeg[g1] += 1
+
+#     def TopologicalSorting(self, queue, indegree, res, adj):
+#         while queue:
+#             u = queue.popleft()  # O(1) deque pop
+#             res.append(u)
+#             for v in adj[u]:
+#                 indegree[v] -= 1
+#                 if indegree[v] == 0:
+#                     queue.append(v)
+
+#     def SortItemsbyGroups(self):
+#         # Topologically sort the items
+#         queue = deque([i for i in range(self.n) if self.bindeg[i] == 0])
+#         self.TopologicalSorting(queue, self.bindeg, self.bres, self.adj)
+
+#         # Topologically sort the groups
+#         queue = deque([i for i in range(self.m) if self.gindeg[i] == 0])
+#         self.TopologicalSorting(queue, self.gindeg, self.gres, self.groupAdj)
+
+#         # Combine the results based on group order and item order
+#         result = []
+#         for g in self.gres:
+#             for item in self.bres:
+#                 if self.group[item] == g:
+#                     result.append(item)
+
+#         return result
+
+# # Example usage
+# n = 8
+# m = 2
+# group = [-1, 0, 0, 1, -1, -1, 1, -1]
+# beforeItems = [[], [6], [5], [6], [3, 6], [], [], []]
+
+# sol = Solution(n, m, group, beforeItems)
+# sorted_items = sol.SortItemsbyGroups()
+# print(sorted_items)
+
+
+# class solution:
+#     def __init__(self,tickets):
+#         self.tickets = tickets
+#         self.cset = set()
+#         for edges in self.tickets:
+#             self.cset.add(edges[0],edges[1])
+#         self.cities = list(self.cset).sort()
+#         self.stack=[]
+    
+#     def dfs(self,)
+
+
+
+
+
+
+

@@ -197,22 +197,102 @@
 
 
 ## Trees
-class Node:
-    def __init__(self,val):
-        self.left = None
-        self.right = None
-        self.val = val
-class Tree:
-    def __init__(self):
-        self.root = None
+# class Node:
+#     def __init__(self, val):
+#         self.left = None
+#         self.right = None
+#         self.val = val
+
+# class Tree:
+#     def __init__(self):
+#         self.root = None
     
-    def append(self,val):
-        if self.root==None:
-            self.root = self.Node(val)
-            return
-        self._append()
+#     def append(self, val):
+#         if self.root is None:
+#             self.root = Node(val) 
+#             return
+#         self._append(self.root, val)
           
-    def _append(self,val):
-        if self.left==None:
+#     def _append(self, node, val):
+#         if node.val > val:
+#             if node.left is None:
+#                 node.left = Node(val)  
+#             else:
+#                 self._append(node.left, val)
+#         else:
+#             if node.right is None:
+#                 node.right = Node(val)
+#             else:
+#                 self._append(node.right, val)
+        
+#     def search(self, val):
+#         if self.root is None:
+#             return False
+#         else:
+#             return self._search(self.root, val)
+    
+#     def _search(self, node, val):
+#         if node is None:
+#             return False
+#         if node.val == val:
+#             return True
+#         elif node.val > val:
+#             return self._search(node.left, val) 
+#         else:
+#             return self._search(node.right, val) 
 
-
+#     def inorder(self):
+#         if self.root is None:
+#             return -1
+#         self.inres = []
+#         self._inorder(self.node)
+#         return self.inres
+    
+#     def _inorder(self,node):
+#         self._inorder(self,node.left)
+#         self.inres.append(node.val)
+#         self._inorder(self,node.right)
+    
+#     def postorder(self):
+#         if self.root is None:
+#             return -1
+#         self.postres = []
+#         self._postorder(self.root)
+#         return self.postres
+    
+#     def _postorder(node):
+#         self._postorder(node.left)
+#         self._postorder(node.right)
+#         self._postres.append(node.val)
+    
+#     def preorder(self):
+#         if self.root is None:
+#             return -1
+#         self.preres = []
+#         self._preres(self.root)
+#         return self.preres
+    
+#     def _preorder(node):
+#         self.preres.append(node.val)
+#         self._preorder(node.left)
+#         self._preorder(node.right)
+    
+#     def levelOrder(self):
+#         if self.root is None:
+#             return (-1,0)
+#         result =[]
+#         queue = [self.root]
+#         nqueue = []
+#         level = 1
+#         while queue:
+#             for curr in queue:
+#                 result.append(curr.val)
+#                 if curr.left:
+#                     nqueue.append(curr.left)
+#                 if curr.right:
+#                     nqueue.append(curr.right)
+#             if nqueue:
+#                 level+=1
+#             queue = nqueue
+#             nqueue = []
+#         return (result, level)

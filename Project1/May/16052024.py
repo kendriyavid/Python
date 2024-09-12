@@ -57,25 +57,25 @@
 #         i=mid+1
 # print(indx)
 
-arr=["x","x","y","y"]
-i=0
-j=len(arr)-1
-indx=0
-target='x'
+# arr=["x","x","y","y"]
+# i=0
+# j=len(arr)-1
+# indx=0
+# target='x'
+# # while i<=j:
+# #     mid=(i+j)//2
+# #     if arr[mid]>target:
+# #         indx=mid
+# #         j=mid-1
+# #     else:
+# #         i=mid+1
+
 # while i<=j:
 #     mid=(i+j)//2
-#     if arr[mid]>target:
+#     if arr[mid]<=target:
+#         i=mid+1
+#     else:
 #         indx=mid
 #         j=mid-1
-#     else:
-#         i=mid+1
-
-while i<=j:
-    mid=(i+j)//2
-    if arr[mid]<=target:
-        i=mid+1
-    else:
-        indx=mid
-        j=mid-1
-print(arr[indx])
-print(indx)
+# print(arr[indx])
+# print(indx)
