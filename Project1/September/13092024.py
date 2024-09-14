@@ -143,51 +143,82 @@
 #         self.bfs()
 #         return self.result
 
-class Solution:
-    def dfs(self, node, parent):
-        if not node:
-            return
-        self.parentPointers[node] = parent  # Store parent pointer for each node
-        self.visitedNodes[node] = False  # Mark all nodes as unvisited initially
-        self.dfs(node.left, node)  # Recursive DFS for the left subtree
-        self.dfs(node.right, node)  # Recursive DFS for the right subtree
+# class Solution:
+#     def dfs(self, node, parent):
+#         if not node:
+#             return
+#         self.parentPointers[node] = parent  # Store parent pointer for each node
+#         self.visitedNodes[node] = False  # Mark all nodes as unvisited initially
+#         self.dfs(node.left, node)  # Recursive DFS for the left subtree
+#         self.dfs(node.right, node)  # Recursive DFS for the right subtree
     
-    def bfs(self, stnode):
-        queue = [stnode]  # BFS queue initialized with the start node
-        self.visitedNodes[stnode] = True  # Mark the start node as visited
-        time = 0
+#     def bfs(self, stnode):
+#         queue = [stnode]  # BFS queue initialized with the start node
+#         self.visitedNodes[stnode] = True  # Mark the start node as visited
+#         time = 0
         
-        while queue:
-            nqueue = []  # List to hold nodes to burn in the next time unit
-            for node in queue:
-                # Check if the left child can be burned
-                if node.left and not self.visitedNodes[node.left]:
-                    nqueue.append(node.left)
-                    self.visitedNodes[node.left] = True
+#         while queue:
+#             nqueue = []  # List to hold nodes to burn in the next time unit
+#             for node in queue:
+#                 # Check if the left child can be burned
+#                 if node.left and not self.visitedNodes[node.left]:
+#                     nqueue.append(node.left)
+#                     self.visitedNodes[node.left] = True
                 
-                # Check if the right child can be burned
-                if node.right and not self.visitedNodes[node.right]:
-                    nqueue.append(node.right)
-                    self.visitedNodes[node.right] = True
+#                 # Check if the right child can be burned
+#                 if node.right and not self.visitedNodes[node.right]:
+#                     nqueue.append(node.right)
+#                     self.visitedNodes[node.right] = True
                 
-                # Check if the parent can be burned
-                if self.parentPointers[node] and not self.visitedNodes[self.parentPointers[node]]:
-                    nqueue.append(self.parentPointers[node])
-                    self.visitedNodes[self.parentPointers[node]] = True
+#                 # Check if the parent can be burned
+#                 if self.parentPointers[node] and not self.visitedNodes[self.parentPointers[node]]:
+#                     nqueue.append(self.parentPointers[node])
+#                     self.visitedNodes[self.parentPointers[node]] = True
             
-            if nqueue:  # Increment time only if there are nodes to burn
-                time += 1
+#             if nqueue:  # Increment time only if there are nodes to burn
+#                 time += 1
             
-            queue = nqueue  # Move to the next level
+#             queue = nqueue  # Move to the next level
         
-        return time
+#         return time
 
-    def MinimumTimetoBurn(self, root, start):
-        self.start = start
-        self.parentPointers = {}  # Dictionary to store parent pointers
-        self.visitedNodes = {}  # Dictionary to track visited nodes
+#     def MinimumTimetoBurn(self, root, start):
+#         self.start = start
+#         self.parentPointers = {}  # Dictionary to store parent pointers
+#         self.visitedNodes = {}  # Dictionary to track visited nodes
         
-        self.dfs(root, None)  # Perform DFS to set up parent pointers
-        time = self.bfs(self.start)  # Perform BFS to calculate burn time
+#         self.dfs(root, None)  # Perform DFS to set up parent pointers
+#         time = self.bfs(self.start)  # Perform BFS to calculate burn time
         
-        return time
+#         return time
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def leftHeight(self,node):
+        if not node:
+            return 0
+        return 1+ self.leftHeight(node.left)
+
+    def rightHeight(self,node):
+        if not node:
+            return 0
+        return 1+self.rightHeight(node.right)
+    
+    def nodeCalulation(self,node):
+        if not node:
+            return 0
+        lh = self.leftHeight(node)
+        rh = self.rightHeight(node)
+        if lh!=rh:
+            return 1+self.nodeCalulation(node.left)+self.nodeCalulation(node.right)
+        else:
+            return 2**(lh)-1
+
+    def countNodes(self, root: Optional[TreeNode]) -> int:
+        return self.nodeCalculation(root)
+        
