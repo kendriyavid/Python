@@ -206,3 +206,25 @@
 #             self._floor(node.right,val)
 
 
+## Deleting the node in bst 
+
+# class Solution:
+#     def deleteNode(self,tnode,root):
+#         self.tnode = tnode
+#         self.root = root
+#         self.prev = None
+#         self.curr = self.root
+#         self.location =None
+#         self.dfs(self.root,None)
+#         self.prev.left = self.location.left
+
+
+#     def dfs(self,node,prev):
+#         if node is None:
+#             return 
+#         if node.val == tnode:
+#             self.location = Node
+#             self.prev = prev
+#             return
+#         self.dfs(node.left,node)
+#         self.dfs(node.right,node)
