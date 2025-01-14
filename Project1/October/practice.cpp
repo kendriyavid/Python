@@ -376,39 +376,113 @@
 // }
 
 
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 
-int main() {
-    // Input
-    int length;
-    cin >> length;
-    vector<int> arr(length);
-    for (int i = 0; i < length; i++) {
-        cin >> arr[i];
-    }
+// int main() {
+//     // Input
+//     int length;
+//     cin >> length;
+//     vector<int> arr(length);
+//     for (int i = 0; i < length; i++) {
+//         cin >> arr[i];
+//     }
 
-    // Prefix sum and mapping
-    unordered_map<int, int> modIndex; // stores first occurrence of each modulo
-    modIndex[0] = -1; // To handle the case where prefix sum itself is directly divisible by 7
-    int total = 0;
-    int maxLen = 0;
+//     // Prefix sum and mapping
+//     unordered_map<int, int> modIndex; // stores first occurrence of each modulo
+//     modIndex[0] = -1; // To handle the case where prefix sum itself is directly divisible by 7
+//     int total = 0;
+//     int maxLen = 0;
 
-    for (int i = 0; i < length; i++) {
-        total += arr[i];
-        int remainder = total % 7;
+//     for (int i = 0; i < length; i++) {
+//         total += arr[i];
+//         int remainder = total % 7;
 
-        // If this remainder has been seen before
-        if (modIndex.find(remainder) != modIndex.end()) {
-            // Calculate the length of the subsequence
-            int len = i - modIndex[remainder];
-            maxLen = max(maxLen, len);
-        } else {
-            // Store the first occurrence of this remainder
-            modIndex[remainder] = i;
-        }
-    }
+//         // If this remainder has been seen before
+//         if (modIndex.find(remainder) != modIndex.end()) {
+//             // Calculate the length of the subsequence
+//             int len = i - modIndex[remainder];
+//             maxLen = max(maxLen, len);
+//         } else {
+//             // Store the first occurrence of this remainder
+//             modIndex[remainder] = i;
+//         }
+//     }
 
-    cout << maxLen << endl;
-    return 0;
-}
+//     cout << maxLen << endl;
+//     return 0;
+// }
+
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main(){
+    
+//     int length;
+//     cin>>length;
+//     vector<char> arr;
+//     int ts=0;
+//     int th=0;
+//     int tp=0;
+//     for(int i=0;i<length;i++){
+//         char c;
+//         if (c=='P'){
+//             tp++;
+//         }
+//         else if (c=="H"){
+//             th++;
+//         }
+//         else if (c=="S"){
+//             ts++;
+//         }
+//         cin>>c;
+//         arr.emplace_back(c);
+//     }
+
+//     int gameswon=0;
+//     bool flag=false;
+//     char action=max(ts,th,tp);
+//     for(int i=0; i<length; i++){
+
+//     }
+
+//     return 0;
+// }
+
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main(){
+
+//     int length;
+//     int target;
+//     cin>>length>>target;
+//     vector<int> vec(length,0);
+//     for (int i=0; i<length; i++){
+//         int num;
+//         cin>>num;
+//         vec[i] = num;
+//     }
+//     vector<int> pref(length,0);
+//     pref[0] = vec[0];
+//     int total=pref[0];
+//     for(int i=1; i<length; i++){
+//         total+=vec[i];
+//     }
+//     int count=0;
+//     unordered_set<int> seti;
+//     seti.insert(0);
+//     for(int i=0; i<length; i++){
+//         int diff = target-pref[i];
+//         if (seti.find(diff)!=seti.end()){
+//             count+=1;
+//         }
+//         seti.insert(pref[i]);
+//     }
+//     cout<<count;
+//     return 0;
+// }
+
+
