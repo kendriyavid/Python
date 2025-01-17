@@ -77,54 +77,178 @@
 // 	func Read (p []bytes)(n int, err)
 // }
 
+// package main
+
+// import (
+// 	"fmt"
+// 	"io"
+// )
+// type NewReader struct {
+// 	p   []byte
+// 	pos int
+// }
+// func allocator(data []byte) (newReader *NewReader) {
+// 	newReader = &NewReader{
+// 		p:   data,
+// 		pos: 0,
+// 	}
+// 	return
+// }
+// func (r *NewReader) Read(p []byte) (n int, err error) {
+// 	if r.pos >= len(r.p) {
+// 		return 0, io.EOF
+// 	}
+
+// 	n = copy(p, r.p[r.pos:])
+// 	r.pos += n
+// 	return n, nil
+// }
+// func main() {
+// 	name := []byte("harshdeepsingh")
+// 	fmt.Println("Input data:", string(name))
+
+// 	newReader := allocator(name)
+
+// 	// Buffer to read into
+// 	buffer := make([]byte, 5)
+// 	for {
+// 		n, err := newReader.Read(buffer)
+// 		if err == io.EOF {
+// 			break
+// 		}
+// 		fmt.Printf("Read %d bytes: %s\n", n, string(buffer[:n]))
+// 	}
+// }
+
+// Concurrency in The Golang Patterns and all the things
+
+// package main
+
+// import "fmt"
+
+// func hello(channel chan int) {
+
+// 	fmt.Println("hello there")
+// 	channel <- 10
+// }
+
+// func main() {
+// 	fmt.Println("started")
+// 	channel := make(chan int)
+// 	go hello(channel)
+// 	// value := <-channel
+// 	// fmt.Println(value)A
+// 	fmt.Println("ended")
+// }
+
+// package main
+
+// import "fmt"
+
+// func hell(channel chan int) {
+// 	for i := 0; i < 10; i++ {
+// 		channel <- i
+// 	}
+// 	close(channel)
+// }
+
+// func main() {
+// 	channel := make(chan int)
+// 	gohell(channel)
+// 	for x := range channel {
+// 		fmt.Println(x)
+// 	}
+// }
+
+// package main
+
+// import "fmt"
+
+// func main() {
+// 	// Create a buffered channel with a capacity of 3
+// 	channel := make(chan string, 3)
+
+// 	// Send 3 items, buffer will become full
+// 	channel <- "harshdeepsingh"
+
+// 	fmt.Println("Sent harsh")
+
+// 	// Now the buffer is full, and this line will block until space is freed up
+// 	channel <- "s" // This will block the execution here
+
+// 	fmt.Println("Sent s") // This will never be printed unless a receiver reads from the channel
+// }
+
+// package main
+
+// import "fmt"
+
+// func hello(channel chan int) {
+// 	fmt.Println("hi there")
+// 	fmt.Println("inside the hello: ", <-channel)
+// 	// channel <- 0
+// }
+
+// func main() {
+// 	channel := make(chan int)
+// 	// go hello(channel)
+// 	channel <- 11
+// 	channel <- 12
+// 	fmt.Println(<-channel)
+// 	fmt.Println("ending")
+// }
+
+// package main
+
+// import (
+// 	"fmt"
+// 	"time"
+// )
+
+// func sender(channel chan int) {
+// 	fmt.Println("Sending 10...")
+// 	channel <- 10 // Will block here if there's no receiver
+// 	fmt.Println("Sent 10!")
+// }
+
+// func receiver(channel chan int) {
+// 	time.Sleep(2 * time.Second) // Simulate delay
+// 	fmt.Println("Receiving value...")
+// 	value := <-channel // Will block here if there's no sender
+// 	fmt.Println("Received:", value)
+// }
+
+// func main() {
+// 	channel := make(chan int)
+
+// 	go sender(channel)
+// 	go receiver(channel)
+
+// 	// This part of the code is not dependent on the channel operations
+// 	fmt.Println("Main function doing other work...")
+// 	time.Sleep(5 * time.Second) // Wait for goroutines to complete
+// 	fmt.Println("Main function ending")
+// }
+
 package main
 
 import (
 	"fmt"
-	"io"
+	"sync"
 )
 
-type NewReader struct {
-	p   []byte
-	pos int
-}
-
-// Allocator function to create a new NewReader
-func allocator(data []byte) (newReader *NewReader) {
-	newReader = &NewReader{
-		p:   data,
-		pos: 0,
-	}
-	return
-}
-
-// Read method to implement io.Reader
-func (r *NewReader) Read(p []byte) (n int, err error) {
-	if r.pos >= len(r.p) {
-		return 0, io.EOF // Nothing more to read
-	}
-
-	// Determine how many bytes to read
-	n = copy(p, r.p[r.pos:])
-	r.pos += n
-	return n, nil
+func hello(i int, g *sync.WaitGroup) {
+	fmt.Println("hi there ", i)
+	fmt.Println("ending ", i)
+	g.Done()
 }
 
 func main() {
-	name := []byte("harshdeepsingh")
-	fmt.Println("Input data:", string(name))
-
-	// Create a new reader
-	newReader := allocator(name)
-
-	// Buffer to read into
-	buffer := make([]byte, 5) // Adjust buffer size as needed
-
-	for {
-		n, err := newReader.Read(buffer)
-		if err == io.EOF {
-			break
-		}
-		fmt.Printf("Read %d bytes: %s\n", n, string(buffer[:n]))
+	var g sync.WaitGroup
+	for i := 0; i < 10; i++ {
+		go hello(i, &g)
+		g.Add(1)
 	}
+	g.Wait()
+	fmt.Println("ending the program")
 }
