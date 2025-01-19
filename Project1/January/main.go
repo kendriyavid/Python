@@ -230,25 +230,33 @@
 // 	fmt.Println("Main function ending")
 // }
 
-package main
+// package main
 
-import (
-	"fmt"
-	"sync"
-)
+// import (
+// 	"fmt"
+// 	"sync"
+// )
 
-func hello(i int, g *sync.WaitGroup) {
-	fmt.Println("hi there ", i)
-	fmt.Println("ending ", i)
-	g.Done()
-}
+// func hello(i int, g *sync.WaitGroup) {
+// 	fmt.Println("hi there ", i)
+// 	fmt.Println("ending ", i)
+// 	g.Done()
+// }
 
-func main() {
-	var g sync.WaitGroup
-	for i := 0; i < 10; i++ {
-		go hello(i, &g)
-		g.Add(1)
-	}
-	g.Wait()
-	fmt.Println("ending the program")
-}
+// func main() {
+// 	var g sync.WaitGroup
+// 	for i := 0; i < 10; i++ {
+// 		go hello(i, &g)
+// 		g.Add(1)
+// 	}
+// 	g.Wait()
+// 	fmt.Println("ending the program")
+// }
+
+// package main
+
+// import "fmt"
+
+// func main(){
+
+// }
