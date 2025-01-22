@@ -88,22 +88,40 @@
 // 	fmt.Println(string(p))
 // }
 
+// package main
+
+// import (
+// 	"bufio"
+// 	"fmt"
+// 	"strings"
+// )
+
+// func main() {
+// 	str := "ffff\n de\n d\n dd\n"
+// 	r := strings.NewReader(str)
+// 	scr := bufio.NewScanner(r)
+// 	buf := make([]byte, 5)
+// 	scr.Buffer(buf, 1)
+// 	for scr.Scan() {
+// 		fmt.Println(scr.Text())
+// 	}
+// 	fmt.Println("ended")
+// }
+
 package main
 
 import (
-	"bufio"
+	"context"
 	"fmt"
-	"strings"
+	"time"
 )
 
 func main() {
-	str := "ffff\n de\n d\n dd\n"
-	r := strings.NewReader(str)
-	scr := bufio.NewScanner(r)
-	buf := make([]byte, 5)
-	scr.Buffer(buf, 1)
-	for scr.Scan() {
-		fmt.Println(scr.Text())
+	fmt.Println("started")
+	ctx, cancleFunc := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
+	select {
+	case <-ctx.Done():
+		fmt.Println(<-ctx.Done())
+		cancleFunc()
 	}
-	fmt.Println("ended")
 }
