@@ -12,53 +12,41 @@ import (
 )
 
 func readConn(ctx context.Context, cancleFunc context.CancelFunc, conn net.Conn) {
-	select {
-	case <-ctx.Done():
-		log.Println("canclelling the read")
-		return
-	default:
-		scr := bufio.NewScanner(conn)
-		for scr.Scan() {
-			_, err := fmt.Fprintln(os.Stdout, scr.Text())
-			if err != nil {
-				log.Println("Error writing to stdout:", err)
-				cancleFunc()
-				return
-			}
-		}
-		if err := scr.Err(); err != nil {
-			if err == io.EOF {
-				log.Println("client closed the connection gracefully")
-			} else {
-				log.Println("Error reading from connection:", err)
-			}
+	scr := bufio.NewScanner(conn)
+	for scr.Scan() {
+		_, err := fmt.Fprintln(os.Stdout, scr.Text())
+		if err != nil {
+			log.Println("Error writing to stdout:", err)
 			cancleFunc()
+			return
 		}
+	}
+	if err := scr.Err(); err != nil {
+		if err == io.EOF {
+			log.Println("client closed the connection gracefully")
+		} else {
+			log.Println("Error reading from connection:", err)
+		}
+		cancleFunc()
 	}
 }
 
 func writeConn(ctx context.Context, cancleFunc context.CancelFunc, conn net.Conn) {
-	select {
-	case <-ctx.Done():
-		log.Println("canclelling the write")
-		return
-	default:
-		writer := bufio.NewWriter(conn)
-		scanner := bufio.NewScanner(os.Stdin)
+	writer := bufio.NewWriter(conn)
+	scanner := bufio.NewScanner(os.Stdin)
 
-		for scanner.Scan() {
-			_, err := writer.WriteString(scanner.Text() + "\n")
-			if err != nil {
-				log.Println("Error writing to connection:", err)
-				cancleFunc()
-				return
-			}
+	for scanner.Scan() {
+		_, err := writer.WriteString(scanner.Text() + "\n")
+		if err != nil {
+			log.Println("Error writing to connection:", err)
+			cancleFunc()
+			return
+		}
 
-			if err := writer.Flush(); err != nil {
-				log.Println("Error flushing writer:", err)
-				cancleFunc()
-				return
-			}
+		if err := writer.Flush(); err != nil {
+			log.Println("Error flushing writer:", err)
+			cancleFunc()
+			return
 		}
 	}
 }
@@ -91,3 +79,19 @@ func main() {
 		go handle(ctx, conn)
 	}
 }
+
+// number of concurrent connections
+// atomic values
+
+// unique id
+// map with uuid
+// attach uuid with context
+// do the getter and setter of the uuid closure type to protect the data
+
+// map with adding and removing
+
+// specifically sending to a client
+// broadcast all and single and group
+
+// encryption
+// asymettric encryption aes

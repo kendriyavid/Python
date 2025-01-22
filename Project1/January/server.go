@@ -119,9 +119,16 @@ import (
 func main() {
 	fmt.Println("started")
 	ctx, cancleFunc := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
+	ctx2, cancleFunc := context.WithDeadline(context.Background(), time.Now().Add(5*time.Second))
 	select {
 	case <-ctx.Done():
 		fmt.Println(<-ctx.Done())
+		fmt.Println("first")
 		cancleFunc()
+	case <-ctx2.Done():
+		fmt.Println("second")
+		// default:
+		// 	fmt.Println("default")
 	}
+	fmt.Println("exiting")
 }
