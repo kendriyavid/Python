@@ -8,90 +8,93 @@ import (
 	"log"
 	"net"
 	"os"
+	"sync"
 	"time"
 )
 
-func readConn(ctx context.Context, cancleFunc context.CancelFunc, conn net.Conn) {
-	scr := bufio.NewScanner(conn)
-	for scr.Scan() {
-		_, err := fmt.Fprintln(os.Stdout, scr.Text())
-		if err != nil {
-			log.Println("Error writing to stdout:", err)
-			cancleFunc()
+func readConn(ctx context.Context, cancelFunc context.CancelFunc, conn net.Conn) {
+	scanner := bufio.NewScanner(conn)
+	for scanner.Scan() {
+		select {
+		case <-ctx.Done():
 			return
+		default:
+			_, err := fmt.Fprintln(os.Stdout, scanner.Text())
+			if err != nil {
+				log.Println("Error writing to stdout:", err)
+				cancelFunc()
+				return
+			}
 		}
 	}
-	if err := scr.Err(); err != nil {
-		if err == io.EOF {
-			log.Println("client closed the connection gracefully")
-		} else {
-			log.Println("Error reading from connection:", err)
-		}
-		cancleFunc()
+	if err := scanner.Err(); err != nil && err != io.EOF {
+		log.Println("Error reading from connection:", err)
+		cancelFunc()
 	}
 }
 
-func writeConn(ctx context.Context, cancleFunc context.CancelFunc, conn net.Conn) {
+func writeConn(ctx context.Context, cancelFunc context.CancelFunc, conn net.Conn) {
 	writer := bufio.NewWriter(conn)
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
-		_, err := writer.WriteString(scanner.Text() + "\n")
-		if err != nil {
-			log.Println("Error writing to connection:", err)
-			cancleFunc()
+		select {
+		case <-ctx.Done():
 			return
-		}
-
-		if err := writer.Flush(); err != nil {
-			log.Println("Error flushing writer:", err)
-			cancleFunc()
-			return
+		default:
+			_, err := writer.WriteString(scanner.Text() + "\n")
+			if err != nil {
+				log.Println("Error writing to connection:", err)
+				cancelFunc()
+				return
+			}
+			if err := writer.Flush(); err != nil {
+				log.Println("Error flushing writer:", err)
+				cancelFunc()
+				return
+			}
 		}
 	}
 }
 
-func handle(ctx context.Context, conn net.Conn) {
-	defer conn.Close()
-	ctx, cancleFunc := context.WithDeadline(ctx, time.Now().Add(1*time.Minute))
-	defer cancleFunc()
-	go readConn(ctx, cancleFunc, conn)
-	go writeConn(ctx, cancleFunc, conn)
+func handle(wg *sync.WaitGroup, semaphore chan bool, ctx context.Context, conn net.Conn) {
+	defer func() {
+		conn.Close()
+		<-semaphore
+		wg.Done()
+	}()
+	ctx, cancelFunc := context.WithDeadline(ctx, time.Now().Add(1*time.Minute))
+	defer cancelFunc()
+
+	go readConn(ctx, cancelFunc, conn)
+	go writeConn(ctx, cancelFunc, conn)
+
 	<-ctx.Done()
 }
 
 func main() {
-	var ctx context.Context = context.Background()
-	li, err := net.Listen("tcp", ":8080")
+	var wg sync.WaitGroup
+	semaphore := make(chan bool, 10)
+	ctx := context.Background()
+
+	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		log.Fatal("Error listening:", err)
 	}
-	defer li.Close()
+	defer listener.Close()
 
 	log.Println("Server listening on :8080")
 
 	for {
-		conn, err := li.Accept()
+		conn, err := listener.Accept()
 		if err != nil {
 			log.Println("Error accepting connection:", err)
 			continue
 		}
-		go handle(ctx, conn)
+
+		wg.Add(1)
+		semaphore <- true
+		go handle(&wg, semaphore, ctx, conn)
 	}
+
 }
-
-// number of concurrent connections
-// atomic values
-
-// unique id
-// map with uuid
-// attach uuid with context
-// do the getter and setter of the uuid closure type to protect the data
-
-// map with adding and removing
-
-// specifically sending to a client
-// broadcast all and single and group
-
-// encryption
-// asymettric encryption aes
