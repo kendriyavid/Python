@@ -209,27 +209,52 @@
 
 // mutex
 
-package main
+// package main
 
-import (
-	"fmt"
-	"sync"
-)
+// import (
+// 	"fmt"
+// 	"sync"
+// )
 
-func main() {
+// func main() {
 
-	var counter int = 0
-	var m sync.Mutex
-	var wg sync.WaitGroup
-	for i := 0; i < 1000; i++ {
-		wg.Add(1)
-		go func() {
-			m.Lock()
-			counter++
-			m.Unlock()
-			wg.Done()
-		}()
-	}
-	wg.Wait()
-	fmt.Println(counter)
-}
+// 	var counter int = 0
+// 	var m sync.Mutex
+// 	var wg sync.WaitGroup
+// 	for i := 0; i < 1000; i++ {
+// 		wg.Add(1)
+// 		go func() {
+// 			m.Lock()
+// 			counter++
+// 			m.Unlock()
+// 			wg.Done()
+// 		}()
+// 	}
+// 	wg.Wait()
+// 	fmt.Println(counter)
+// }
+
+// package main
+
+// import (
+// 	"fmt"
+// 	"net/http"
+// )
+
+// type foo int
+
+// func (f *foo) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+// 	fmt.Println(req.Body)
+// 	res.Header().Add("content-type", "text/plain")
+// 	fmt.Println(res.Header())
+// 	res.Write([]byte("<p>hi there<p>"))
+// }
+
+// func main() {
+// 	f := new(foo)
+// 	err := http.ListenAndServe(":8080", f)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	fmt.Println("server started")
+// }
