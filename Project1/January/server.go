@@ -352,30 +352,50 @@
 // 	log.Fatal(http.ListenAndServe(":8080", f))
 // }
 
+// package main
+
+// import (
+// 	"fmt"
+// 	"net/http"
+// )
+
+// type foo int
+
+// func (f *foo) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+// 	defer req.Body.Close()
+// 	req.ParseForm()
+// 	// fmt.Println(req.Body)
+// 	value := req.Form["id"]
+// 	fmt.Println(req.Form)
+// 	res.WriteHeader(200)
+// 	res.Header().Add("Content-Type", "text/html")
+// 	res.Write([]byte(fmt.Sprintf("value was: %s", value)))
+// }
+
+// func main() {
+// 	f := new(foo)
+// 	err := http.ListenAndServe(":8080", f)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// }
+
 package main
 
 import (
+	"crypto/sha256"
 	"fmt"
-	"net/http"
 )
 
-type foo int
-
-func (f *foo) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-	defer req.Body.Close()
-	req.ParseForm()
-	// fmt.Println(req.Body)
-	value := req.Form["id"]
-	fmt.Println(req.Form)
-	res.WriteHeader(200)
-	res.Header().Add("Content-Type", "text/html")
-	res.Write([]byte(fmt.Sprintf("value was: %s", value)))
-}
-
 func main() {
-	f := new(foo)
-	err := http.ListenAndServe(":8080", f)
-	if err != nil {
-		panic(err)
-	}
+	// Original string
+	input := "Hello, World!"
+
+	// Generate hash
+	hash := sha256.Sum256([]byte(input))
+
+	// Different ways to view the hash
+	fmt.Printf("Raw hash (byte array): %v\n", hash)
+	fmt.Printf("Hash as bytes: %x\n", hash) // Hexadecimal representation
+	fmt.Printf("Hash length: %d bytes\n", len(hash))
 }

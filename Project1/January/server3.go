@@ -1,13 +1,37 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"sync"
 	"time"
 )
+
+type URLShortener struct {
+	mu      sync.RWMutex
+	storage map[string]string
+}
+
+func NewURLShortener() *URLShortener {
+	return &URLShortener{
+		storage: make(map[string]string),
+	}
+}
+
+func (us *URLShortener) GenerateShortURL(originalURL string) string {
+	// Generate a unique short URL using SHA-256 hash
+	hash := sha256.Sum256([]byte(originalURL + time.Now().String()))
+	shortCode := base64.URLEncoding.EncodeToString(hash[:6])
+
+	us.mu.Lock()
+	defer us.mu.Unlock()
+	us.storage[shortCode] = originalURL
+
+	return shortCode
+}
 
 type response struct {
 	OldLink   string    `json:"old_link"`
@@ -16,62 +40,47 @@ type response struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-type safeMap struct {
-	mu sync.RWMutex
-	mp map[string]string
-}
-
-func urlShortener(res http.ResponseWriter, req *http.Request) {
-	log.Println("recieved at")
-	defer req.Body.Close()
-	req.ParseForm()
-	oldURL := req.PostForm["link"][0]
-	lch := make(chan string)
-	go func() {
-		fmt.Print("inside the function")
-		time.Sleep(5 * time.Second) //simulating  the work
-		safemp.mu.Lock()
-		safemp.mp[oldURL] = "thiis is new URL"
-		safemp.mu.Unlock()
-		lch <- "this is new URL"
-	}()
-	fmt.Println("before the select")
-	select {
-	case newURL := <-lch:
-		fmt.Println("inside the first case")
-		fmt.Println(safemp.mp)
-		fmt.Println(newURL)
-		// res.WriteHeader(200)
-		res.Header().Set("Content-Type", "application/json")
-		res.Header().Add("Custom-Header", "Harshdeep'sProject")
-		fmt.Println("here")
-		v := response{
-			OldLink:   oldURL,
-			NewLink:   newURL,
-			Expire:    time.Now().Add(24 * time.Hour),
-			CreatedAt: time.Now(),
-		}
-		resbody, err := json.Marshal(v)
-		fmt.Println(resbody)
-		if err != nil {
-			panic(err)
-		}
-		res.Write([]byte(resbody))
-		fmt.Println("finished")
-	case <-req.Context().Done():
-		fmt.Println("cancelling")
-		http.Error(res, "operation cancelled", http.StatusRequestTimeout)
+func (us *URLShortener) HandleShorten(res http.ResponseWriter, req *http.Request) {
+	if req.Method != http.MethodPost {
+		http.Error(res, "Method not allowed", http.StatusMethodNotAllowed)
+		return
 	}
 
+	if err := req.ParseForm(); err != nil {
+		http.Error(res, "Invalid form data", http.StatusBadRequest)
+		return
+	}
+
+	oldURL := req.PostForm.Get("link")
+	if oldURL == "" {
+		http.Error(res, "Missing URL", http.StatusBadRequest)
+		return
+	}
+
+	// Simulate some processing time
+	time.Sleep(500 * time.Millisecond)
+
+	shortURL := us.GenerateShortURL(oldURL)
+
+	resp := response{
+		OldLink:   oldURL,
+		NewLink:   shortURL,
+		Expire:    time.Now().Add(24 * time.Hour),
+		CreatedAt: time.Now(),
+	}
+
+	res.Header().Set("Content-Type", "application/json")
+	res.WriteHeader(http.StatusOK)
+	json.NewEncoder(res).Encode(resp)
 }
 
-var safemp *safeMap = new(safeMap)
-
 func main() {
-	var baseMux *http.ServeMux = http.NewServeMux()
-	baseMux.Handle("POST /shorten/", http.HandlerFunc(urlShortener))
-	err := http.ListenAndServe(":8080", baseMux)
-	if err != nil {
-		panic(err)
+	shortener := NewURLShortener()
+	mux := http.NewServeMux()
+	mux.HandleFunc("POST /shorten/", shortener.HandleShorten)
+
+	log.Println("Starting server on :8080")
+	if err := http.ListenAndServe(":8080", mux); err != nil {
+		log.Fatal(err)
 	}
 }
