@@ -351,3 +351,31 @@
 // 	log.Println("Server starting on :8080")
 // 	log.Fatal(http.ListenAndServe(":8080", f))
 // }
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+type foo int
+
+func (f *foo) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+	defer req.Body.Close()
+	req.ParseForm()
+	// fmt.Println(req.Body)
+	value := req.Form["id"]
+	fmt.Println(req.Form)
+	res.WriteHeader(200)
+	res.Header().Add("Content-Type", "text/html")
+	res.Write([]byte(fmt.Sprintf("value was: %s", value)))
+}
+
+func main() {
+	f := new(foo)
+	err := http.ListenAndServe(":8080", f)
+	if err != nil {
+		panic(err)
+	}
+}
