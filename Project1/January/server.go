@@ -258,3 +258,96 @@
 // 	}
 // 	fmt.Println("server started")
 // }
+
+// basic applicatiton with docker
+// url shortening service with redis and docker
+// reverse proxy
+// splitwise application with
+
+// package main
+
+// import (
+// 	"io"
+// 	"log"
+// 	"net/http"
+// 	"time"
+// )
+
+// type foo int
+
+// func (f *foo) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+// 	// Safely read and close request body
+
+// 	select{
+// 	case <-req.Context().Done():
+// 		return
+// 	default:
+// 		time.Sleep(10*time.Second)  // simulaTING BIG SEARCH
+// 		defer req.Body.Close()
+// 		body, _ := io.ReadAll(req.Body)
+
+// 		// Log request details (safer than fmt.Println)
+// 		log.Printf("Headers: %v", req.Header)
+// 		log.Printf("Body: %s", body)
+
+// 		// Correct MIME type
+// 		res.Header().Add("Content-Type", "text/plain")
+// 		res.WriteHeader(http.StatusOK)
+
+// 		// Write response with error handling
+// 		_, err := res.Write([]byte("This is harshdeepsingh"))
+// 		if err != nil {
+// 			log.Printf("Error writing response: %v", err)
+// 		}
+// 	}
+
+// }
+
+// func main() {
+// 	f := new(foo)
+// 	log.Println("Server starting on :8080")
+// 	log.Fatal(http.ListenAndServe(":8080", f))
+// }
+
+// package main
+
+// import (
+// 	"context"
+// 	"fmt"
+// 	"log"
+// 	"net/http"
+// 	"time"
+// )
+
+// type foo int
+
+// func (f *foo) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+// 	ctx, cancel := context.WithTimeout(req.Context(), 5*time.Second)
+// 	defer cancel()
+
+// 	resultChan := make(chan []byte, 1)
+
+// 	go func() {
+// 		time.Sleep(3 * time.Second)
+// 		resultChan <- []byte("Search result for harshdeepsingh")
+// 	}()
+
+// 	select {
+// 	case <-ctx.Done():
+// 		// Context cancelled (timeout or client disconnection)
+// 		fmt.Println("search cancelled")
+// 		http.Error(res, "Search cancelled", http.StatusRequestTimeout)
+// 		return
+// 	case result := <-resultChan:
+// 		// Successful result
+// 		res.Header().Set("Content-Type", "text/plain")
+// 		res.WriteHeader(http.StatusOK)
+// 		res.Write(result)
+// 	}
+// }
+
+// func main() {
+// 	f := new(foo)
+// 	log.Println("Server starting on :8080")
+// 	log.Fatal(http.ListenAndServe(":8080", f))
+// }
