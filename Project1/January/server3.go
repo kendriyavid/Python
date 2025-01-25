@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 	"sync"
@@ -32,9 +33,10 @@ func readURL(res http.ResponseWriter, req *http.Request) {
 	safemp.mu.RUnlock()
 	fmt.Println(target)
 	if !ok {
-		http.NotFoundHandler()
+		http.NotFound(res, req)
 	}
 	http.Redirect(res, req, target, http.StatusMovedPermanently)
+
 }
 
 func urlShortener(res http.ResponseWriter, req *http.Request) {
@@ -43,6 +45,7 @@ func urlShortener(res http.ResponseWriter, req *http.Request) {
 	oldURL := req.PostFormValue("link")
 	if oldURL == "" {
 		http.Error(res, "no url provided", http.StatusBadRequest)
+		return
 	}
 	lch := make(chan string)
 	go func() {
@@ -68,9 +71,11 @@ func urlShortener(res http.ResponseWriter, req *http.Request) {
 		resbody, err := json.Marshal(v)
 		fmt.Println(resbody)
 		if err != nil {
-			panic(err)
+			log.Println("Failed to marshal JSON:", err)
+			http.Error(res, "internal server error", http.StatusInternalServerError)
+			return
 		}
-		res.Write([]byte(resbody))
+		res.Write((resbody))
 		fmt.Println("finished")
 	case <-req.Context().Done():
 		fmt.Println("cancelling")
