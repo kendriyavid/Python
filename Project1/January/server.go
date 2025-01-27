@@ -398,4 +398,5 @@ func main() {
 	fmt.Printf("Raw hash (byte array): %v\n", hash)
 	fmt.Printf("Hash as bytes: %x\n", hash) // Hexadecimal representation
 	fmt.Printf("Hash length: %d bytes\n", len(hash))
+	fmt.Println(string(hash))
 }
