@@ -155,31 +155,66 @@
 // }
 
 
-// group anagrams
+// // group anagrams
 
-#include <bits/stdc++.h>
-using namespace std;
+// #include <bits/stdc++.h>
+// using namespace std;
 
-int main(){
-    int n;
-    cin>>n;
-    vector<string> vec;
-    for(int i=0;i<n;i++){
-        cin>>vec[i];
-    }
-    // groupring
-    unordered_map<string, vector<string>> mp;
-    for(int i=0;i<n;i++){
-        string temp = vec[i];
-        sort(temp.begin(),temp.end());
-        mp[temp].emplace_back(vec[i]);
-    }
-    vector<vector<string>> result;
-    for(auto &it:mp){
-        result.emplace_back(it.second);
-    }
-    for(int i=0;i<n;i++){
-        cout<<result[i]<<endl;
-    }
-    return 0;
-}
+// int main(){
+//     int n;
+//     cin>>n;
+//     vector<string> vec;
+//     for(int i=0;i<n;i++){
+//         cin>>vec[i];
+//     }
+//     // groupring
+//     unordered_map<string, vector<string>> mp;
+//     for(int i=0;i<n;i++){
+//         string temp = vec[i];
+//         sort(temp.begin(),temp.end());
+//         mp[temp].emplace_back(vec[i]);
+//     }
+//     vector<vector<string>> result;
+//     for(auto &it:mp){
+//         result.emplace_back(it.second);
+//     }
+//     return 0;
+// }
+
+
+// top k frequent elemetns
+
+// #include <bits/stdc++.h>
+// using namespace std; 
+
+// bool comp(pair<int,int> p1, pair<int,int> p2){
+//     if(p1.second>p2.second){
+//         return true;
+//     }
+//     return false;
+// }
+
+// int main(){
+//     int n;
+//     cin>>n;
+//     int k;
+//     cin>>k;
+//     vector<int> vec(n);
+//     for(int i=0;i<n;i++){
+//         cin>>vec[i];
+//     }
+//     unordered_map<int,int> mp;
+//     for(int i=0;i<n;i++){
+//         mp[vec[i]]++;
+//     }
+//     // converting to vector of pairs<int,int>
+//     vector<pair<int,int>> result;
+//     for(auto &it: mp ){
+//         result.emplace_back(it.first,it.second);
+//     }
+//     sort(result.begin(),result.end(),comp);
+//     for(int i=0;i<k;i++){
+//         cout<<result[i].second<<endl;
+//     }
+//     return 0;
+// }
