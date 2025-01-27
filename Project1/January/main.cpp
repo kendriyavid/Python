@@ -91,35 +91,95 @@
 // }
 
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// bool checkAnagram(string s1,string s2){
+//     if (s1.length()!=s2.length()){
+//         return false;
+//     }
+//         vector<int> s1arr(26,0);
+//         vector<int> s2arr(26,0);
+//         for(char &ch:s1){     
+//             s1arr[int(ch)]++  ;
+//         }
+//         for(char &ch:s2){
+//             s2arr[int(ch)]++;
+//         }
+//         for(int i=0;i<s1.length();i++){
+//             cout<<s1arr[i]<<" "<<s2arr[i]<<endl;
+//             if(s1arr[i]!=s2arr[i]){
+//                 return false;
+//             }
+//         }
+//         return true;
+// }
+
+// int main(){
+//     string s1;
+//     string s2;
+//     cin>>s1>>s2;
+//     cout<<checkAnagram(s1,s2);
+//     return 0;
+// }
+
+
+// 2sum problem
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main(){
+//     int n;
+//     cin>>n;
+//     int target;
+//     cin>>target;
+//     vector<int> vec(n);
+//     for(int i=0;i<n;i++){
+//         cin>>vec[i];
+//     }
+//     unordered_map<int,int> mp;
+//     for (int i=0;i<n;i++){
+//         cout<< target-vec[i]<<endl;
+//         if(mp.find(target-vec[i])!=mp.end()){
+//             cout<<"here"<<endl;
+//             cout<<i<<" "<<mp[target-vec[i]]<<endl;
+//             break;
+//         }
+//         mp[vec[i]] = i;
+//     }   
+//     for(auto &it:mp){
+//         cout<<it.first<<" "<<it.second<<endl;
+//     }
+//     return 0;
+// }
+
+
+// group anagrams
+
 #include <bits/stdc++.h>
 using namespace std;
 
-bool checkAnagram(string s1,string s2){
-    if (s1.length()!=s2.length()){
-        return false;
-    }
-        vector<int> s1arr(26,0);
-        vector<int> s2arr(26,0);
-        for(char &ch:s1){     
-            cout<<ch<<endl;
-            s1arr[int(ch)]++  ;
-        }
-        for(char &ch:s2){
-            s2arr[int(ch)]++;
-        }
-        for(int i=0;i<s1.length();i++){
-            cout<<s1arr[i]<<" "<<s2arr[i]<<endl;
-            if(s1arr[i]!=s2arr[i]){
-                return false;
-            }
-        }
-        return true;
-}
-
 int main(){
-    string s1;
-    string s2;
-    cin>>s1>>s2;
-    cout<<checkAnagram(s1,s2);
+    int n;
+    cin>>n;
+    vector<string> vec;
+    for(int i=0;i<n;i++){
+        cin>>vec[i];
+    }
+    // groupring
+    unordered_map<string, vector<string>> mp;
+    for(int i=0;i<n;i++){
+        string temp = vec[i];
+        sort(temp.begin(),temp.end());
+        mp[temp].emplace_back(vec[i]);
+    }
+    vector<vector<string>> result;
+    for(auto &it:mp){
+        result.emplace_back(it.second);
+    }
+    for(int i=0;i<n;i++){
+        cout<<result[i]<<endl;
+    }
     return 0;
 }
