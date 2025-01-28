@@ -218,3 +218,112 @@
 //     }
 //     return 0;
 // }
+
+
+// encode decode string
+
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main(){
+
+
+//     return 0;
+// }
+
+
+// ARRAY 
+// STRING 
+// HASHING
+// NUMBER THEORY
+// BITMANIPULATION
+// 2 POINTER
+// bINARY SEARCH
+// Recursion
+// Greedy + interval
+// prefix summing
+
+
+// LONGEST SUBSTRING WITHOUT REPEATING CHARS
+#include <bits/stdc++.h>
+using namespace std;
+
+// insert the lastpos in map of char char->lastpos
+// 
+
+// int main(){
+//     string input;
+//     cin>>input;
+//     int maxl=1;
+//     int n = input.length();
+//     int j=0;
+//     unordered_map<char,int> mp;
+
+//     for(int i=0;i<n;i++){
+//         if(mp.find(input[i])!=mp.end()){
+//             if(!mp[input[i]]<j){
+//             j = mp[input[i]];
+//             }
+//         }
+//         mp[input[i]] = i;   
+//         if(maxl<i-j+1){
+//             maxl = i-j+1;
+//         }
+//     }
+//     cout<<maxl;
+//     return 0;
+// }
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> vec(n);
+    for(int i=0;i<n;i++){
+        cin>>vec[i];
+    }
+
+    // prefix mmultiplication array
+    vector<int> prefix(n);
+    prefix[0]= vec[0];
+    for(int i=1;i<n;i++){
+        prefix[i] = prefix[i-1]*vec[i];    
+    }
+
+    for(auto &x:prefix){
+        cout<<x<<" ";
+    }
+    cout<<endl;
+
+    // suffix multiplication array
+    vector<int> suffix(n);
+    suffix[n-1] = vec[n-1];
+    for(int i=n-2;i>=0;i--){
+        suffix[i] = suffix[i+1]*vec[i];
+    }
+
+    for(auto &x:suffix){
+        cout<<x<<" ";
+    }
+    cout<<endl;
+
+    vector<int> result(n);
+    for(int i=0;i<n;i++){
+        int temp1 = 1;
+        if(i-1>=0){
+            temp1 = prefix[i-1];
+        }
+        int temp2 = 1;
+        if(i+1<n){
+            temp2 = suffix[i+1];
+        }
+        result[i] = temp1*temp2;
+        cout<<result[i]<<" ";
+    }
+
+
+    return 0;
+}
