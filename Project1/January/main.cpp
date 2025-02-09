@@ -275,55 +275,160 @@ using namespace std;
 // }
 
 
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main(){
+//     int n;
+//     cin>>n;
+//     vector<int> vec(n);
+//     for(int i=0;i<n;i++){
+//         cin>>vec[i];
+//     }
+
+//     // prefix mmultiplication array
+//     vector<int> prefix(n);
+//     prefix[0]= vec[0];
+//     for(int i=1;i<n;i++){
+//         prefix[i] = prefix[i-1]*vec[i];    
+//     }
+
+//     for(auto &x:prefix){
+//         cout<<x<<" ";
+//     }
+//     cout<<endl;
+
+//     // suffix multiplication array
+//     vector<int> suffix(n);
+//     suffix[n-1] = vec[n-1];
+//     for(int i=n-2;i>=0;i--){
+//         suffix[i] = suffix[i+1]*vec[i];
+//     }
+
+//     for(auto &x:suffix){
+//         cout<<x<<" ";
+//     }
+//     cout<<endl;
+
+//     vector<int> result(n);
+//     for(int i=0;i<n;i++){
+//         int temp1 = 1;
+//         if(i-1>=0){
+//             temp1 = prefix[i-1];
+//         }
+//         int temp2 = 1;
+//         if(i+1<n){
+//             temp2 = suffix[i+1];
+//         }
+//         result[i] = temp1*temp2;
+//         cout<<result[i]<<" ";
+//     }
+
+
+//     return 0;
+// }
+
+// longest consecutive sequence
+// difference between consecutive sequence =1
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// int main(){
+//     int maxl=1;
+//     int n;
+//     cin>>n;
+//     vector<int> vec(n);
+//     for(int i=0;i<n;i++){
+//         cin>>vec[i];
+//     }
+//     // tabulation table
+//     vector<vector<int>> matrix(n+1,(vector<int>(n+1)));
+//     for(int i=0;i<n+1;i++){
+//         for(int j=0;j<n+1;j++){
+//             matrix[i][j] = 0;
+//         }
+//     }
+//     for(int i=1;i<n+1;i++){
+//         for(int j=1;j<n+1;j++){
+//             int up = matrix[i][j-1];
+//             int left = matrix[i-1][j];
+//             matrix[i][j] = 1+max(up,left);
+//         }
+//     }
+//     return matrix[n][n];
+// }
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// int main(){
+//     int n;
+//     cin>>n;
+//     vector<int> vec(n);
+//     for(int i=0;i<n;i++){
+//         cin>>vec[i];
+//     }
+//     unordered_map<int,int> mp;
+//     int maxl = 0;
+//     for(int i=0;i<n;i++){
+//         if(mp.find(vec[i]-1)!=mp.end()){
+//             mp[vec[i]] = mp[vec[i]-1]+1;
+//             if(maxl<mp[vec[i]]){
+//                 maxl = mp[vec[i]];
+//             }
+//         }else{
+//              mp[vec[i]] = 1;
+//         }
+//     }
+//     cout<<maxl;
+//     return 0;
+// }
+
+
+// #include <bits/stdc++.h>
+// using namespace std;
+// int main(){
+//     int n;
+//     cin>>n;
+//     vector<int> vec(n);
+//     for(int i=0;i<n;i++){
+//         cin>>vec[i];
+//     }
+
+//     sort(vec.begin(),vec.end());
+//     for(int i=0;i<n;i++){
+//         cout<<vec[i]<<" ";
+//     }
+//     int maxl=0;
+//     int lmax =0;
+//     int lastsmaller = INT_MIN;
+//     for(int i=0;i<n;i++){
+//         printf("%d,%d \n",maxl,lmax);
+//         if(lastsmaller == vec[i]-1){
+//             lmax++;
+//             if(maxl<lmax){
+//                 maxl = lmax;
+//             }
+//         }else if(lastsmaller==vec[i]){
+//             continue;
+//         }else{
+//             lmax=1;
+//         }
+//         lastsmaller = vec[i];
+//     }
+//     cout<<maxl<<endl;
+//     return 0;
+// }
+
+// hashing problems
+// binary search
+// stacks
+// string based problems
+
+
 #include <bits/stdc++.h>
 using namespace std;
 
 int main(){
-    int n;
-    cin>>n;
-    vector<int> vec(n);
-    for(int i=0;i<n;i++){
-        cin>>vec[i];
-    }
-
-    // prefix mmultiplication array
-    vector<int> prefix(n);
-    prefix[0]= vec[0];
-    for(int i=1;i<n;i++){
-        prefix[i] = prefix[i-1]*vec[i];    
-    }
-
-    for(auto &x:prefix){
-        cout<<x<<" ";
-    }
-    cout<<endl;
-
-    // suffix multiplication array
-    vector<int> suffix(n);
-    suffix[n-1] = vec[n-1];
-    for(int i=n-2;i>=0;i--){
-        suffix[i] = suffix[i+1]*vec[i];
-    }
-
-    for(auto &x:suffix){
-        cout<<x<<" ";
-    }
-    cout<<endl;
-
-    vector<int> result(n);
-    for(int i=0;i<n;i++){
-        int temp1 = 1;
-        if(i-1>=0){
-            temp1 = prefix[i-1];
-        }
-        int temp2 = 1;
-        if(i+1<n){
-            temp2 = suffix[i+1];
-        }
-        result[i] = temp1*temp2;
-        cout<<result[i]<<" ";
-    }
-
 
     return 0;
 }

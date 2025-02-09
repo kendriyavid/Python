@@ -380,23 +380,25 @@
 // 	}
 // }
 
-package main
+// package main
 
-import (
-	"crypto/sha256"
-	"fmt"
-)
+// import (
+// 	"crypto/sha256"
+// 	"fmt"
+// )
 
-func main() {
-	// Original string
-	input := "Hello, World!"
+// func main() {
+// 	// Original string
+// 	input := "Hello, World!"
 
-	// Generate hash
-	hash := sha256.Sum256([]byte(input))
+// 	// Generate hash
+// 	hash := sha256.Sum256([]byte(input))
 
-	// Different ways to view the hash
-	fmt.Printf("Raw hash (byte array): %v\n", hash)
-	fmt.Printf("Hash as bytes: %x\n", hash) // Hexadecimal representation
-	fmt.Printf("Hash length: %d bytes\n", len(hash))
-	fmt.Println(string(hash))
-}
+// 	// Different ways to view the hash
+// 	fmt.Printf("Raw hash (byte array): %v\n", hash)
+// 	fmt.Printf("Hash as bytes: %x\n", hash) // Hexadecimal representation
+// 	fmt.Printf("Hash length: %d bytes\n", len(hash))
+// 	fmt.Println(string(hash))
+// }
+
+
